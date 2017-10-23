@@ -1,0 +1,38 @@
+# Date: Sunday, May, 28th, 2017
+# ID: 4044-100-16
+# Dept: CSIE 2nd Grader
+# Name: Chin Hao, Sung
+
+System Software Programming Homework#11
+
+This is a practice with function fork() and pipe();
+
+Description:
+
+  First, execute the execution file with a absolute filepath as argument given to char *argv[].
+
+  And the program will next produce its first child process, this first child process will then call
+  to function execv() or execl() to execute /bin/cat with the argument already given from char *argv[].
+
+  And next, parent process should produce another child process which call to function execv() or execl()
+  to execute /usr/bin/wc to count the number of lines, words, and bytes of the output of the first child process.
+
+  To finish the jobs, we ought to establish a pipe between the two child process in order to make the second
+  child process receive the data to count from the first child process which cat the source file.
+
+  This is a simple practice but with important concept of fork() and pipe() and some of the commonly use functions like
+  execv() and execl().
+
+  For other details please refer the code.
+  Thank you.
+
+  Saturday, June, 3rd, 2017 edit :
+
+    In this program, there are communication between the child process,
+    And I want the parent process waits for the child process to make my stdout perfect
+    So, I add up two lines in my code which calls to function wait() or function waitpid()
+    the former will let the parent process wait until all the child process exit
+    the second one can aim for some certain child process with given identical pid
+    to see more about the function, man the manual page of them !
+
+

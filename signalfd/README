@@ -1,0 +1,26 @@
+# ID: 4044-100-16
+# DEPT: CSIE GRADER 2
+# NAME: Chin Hao, Sung
+
+System Software Programming Homework #10
+Descrption: Use signalfd to intercept at least 3 kinds of siganls and print it on the screen.
+
+My program can detect signals:
+
+  1. SIGINT ( ctrl+c )
+  2. SIGQUIT( ctrl+\ )
+  3. SIGTSTP( ctrl+z )
+
+As for the others signals, my program "can" detected it too, but I will print out a message to tell
+the user that this program is originally designed for detecting the above 3 signals once again.
+
+The result has been tested right on my computer which is of the OS of Ubuntu 16.04.
+
+*Both of gcc and clang compiler has no error message when compiling.
+*Both of the execution file has the correct result of executions.
+
+
+
+
+
+
