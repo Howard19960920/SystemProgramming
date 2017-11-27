@@ -156,7 +156,7 @@ int main(int argc, char **argv)
   merge(arr, size, 0, size / 2, size - 1);
 
   // 雙線程去計算 difference
-  ps[2].l --; // 這樣才不會漏掉切點的 difference
+  ps[1].l --; // 這樣才不會漏掉切點的 difference
 
   for(idx_i = 0; idx_i < 2; idx_i++)
     pthread_create(&pid[idx_i], NULL, (void *)pthread_diff, &ps[idx_i]);

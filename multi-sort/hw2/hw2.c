@@ -16,8 +16,8 @@ typedef struct ds_pthread
 
 
 
-// pthread_diff 的呼叫函式
-void pthread_diff(void *ps)
+// 計算數字間距的呼叫函式
+void mythread2(void *ps)
 {
   int idx_i, local = 0;
   ds_pthread *p = (ds_pthread *) ps; // 先強轉一波
@@ -32,7 +32,7 @@ void pthread_diff(void *ps)
 
 
 // 合併兩個 sorted array
-void merge(int *arr, int size, int l, int m, int r)
+void mymerge(int *arr, int size, int l, int m, int r)
 {
   // merge 需要一塊跟 arr 一樣大的空間
   int *temp = (int *) malloc(sizeof(int) * size);
@@ -70,7 +70,7 @@ __attribute__((always_inline)) inline void SWAP(int *x, int *y)
 
 
 // 自訂義的 quick sort, 每次選最右邊的當作 pivot
-void quickSort(int *arr, int lbnd, int rbnd)
+void mysort(int *arr, int lbnd, int rbnd)
 {
   if(lbnd >= rbnd)
     return;
@@ -86,16 +86,16 @@ void quickSort(int *arr, int lbnd, int rbnd)
     }
   }
   SWAP(&arr[pidx], &arr[rbnd]);
-  quickSort(arr, lbnd, pidx - 1);
-  quickSort(arr, pidx + 1, rbnd);
+  mysort(arr, lbnd, pidx - 1);
+  mysort(arr, pidx + 1, rbnd);
 }
 
 
 // pthread_sort 的呼叫函式
-void pthread_sort(void *ps)
+void mythread1(void *ps)
 {
   ds_pthread *p = (ds_pthread *) ps;
-  quickSort(p -> arr, p -> l, p -> r);
+  mysort(p -> arr, p -> l, p -> r);
 }
 
 
@@ -147,19 +147,19 @@ int main(int argc, char **argv)
   ds_pthread ps[2] = {{arr, &ret, 0, size / 2, &mutex}, {arr, &ret, size / 2 + 1, size - 1, &mutex}};
 
   for(idx_i = 0; idx_i < 2; idx_i++)
-    pthread_create(&pid[idx_i], NULL, (void *)pthread_sort, &ps[idx_i]);
+    pthread_create(&pid[idx_i], NULL, (void *)mythread1, &ps[idx_i]);
 
   for(idx_i = 0; idx_i < 2; idx_i++)
     pthread_join(pid[idx_i], NULL);
 
   // 把排序好的兩個 sorted array 合併
-  merge(arr, size, 0, size / 2, size - 1);
+  mymerge(arr, size, 0, size / 2, size - 1);
 
   // 雙線程去計算 difference
   ps[1].l --; // 這樣才不會漏掉切點的 difference
 
   for(idx_i = 0; idx_i < 2; idx_i++)
-    pthread_create(&pid[idx_i], NULL, (void *)pthread_diff, &ps[idx_i]);
+    pthread_create(&pid[idx_i], NULL, (void *)mythread2, &ps[idx_i]);
 
   for(idx_i = 0; idx_i < 2; idx_i++)
     pthread_join(pid[idx_i], NULL);
